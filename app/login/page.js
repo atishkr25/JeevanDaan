@@ -53,9 +53,9 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[calc(100vh-8rem)] px-4 bg-gray-900">
-      <div className="bg-gray-800 p-6 sm:p-8 rounded-xl shadow-lg w-full max-w-md text-center">
-        <h1 className="font-bold text-3xl text-white mb-4">Login</h1>
+    <div className="flex justify-center items-center min-h-[calc(100vh-8rem)] px-4">
+      <div className="w-full max-w-md rounded-2xl border border-[#E2EBE5] bg-white p-6 text-center shadow-sm sm:p-8">
+        <h1 className="mb-4 text-3xl font-bold text-[#1A1A1A]">Welcome back</h1>
 
         {/* Email or Username Input */}
         <input
@@ -63,7 +63,7 @@ export default function Login() {
           placeholder="Enter email or username"
           value={identifier}
           onChange={(e) => setIdentifier(e.target.value)}
-          className="w-full p-3 my-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="my-2 w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
         />
 
         {/* Password Input */}
@@ -72,32 +72,32 @@ export default function Login() {
           placeholder="Enter your password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-3 my-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="my-2 w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
         />
 
         {/* Login Button */}
         <button
           onClick={handleLogin}
           disabled={loading}
-          className="w-full mt-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-300 disabled:opacity-50"
+          className="mt-4 w-full cursor-pointer rounded-xl bg-[#1B6B45] px-6 py-2.5 text-sm font-medium text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B6B45]/30 disabled:opacity-50"
         >
           {loading ? "Logging in..." : "Login"}
         </button>
 
-        {error && <p className="text-red-400 mt-3 text-sm">{error}</p>}
+        {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
 
         {/* Google Login Button */}
         {googleEnabled && (
           <button
             onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-            className="w-full mt-2 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition duration-300"
+            className="mt-2 w-full cursor-pointer rounded-xl border border-[#E2EBE5] bg-white px-6 py-2.5 text-sm font-medium text-gray-700 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B6B45]/30"
           >
             Login with Google
           </button>
         )}
 
         {/* Forgot Password & Signup Links */}
-        <div className="flex justify-between text-sm mt-3 text-gray-400">
+        <div className="mt-3 flex justify-between text-sm text-gray-500">
           <button onClick={() => router.push("/forgot-password")} className="hover:underline">
             Forgot Password?
           </button>

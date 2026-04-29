@@ -6,7 +6,7 @@ import Script from "next/script";
 
 const PaymentPage = () => {
   const searchParams = useSearchParams();
-  const fundraiserId = searchParams.get("fundraiserId") || "";
+  const fundraiserId = searchParams.get("fundraiserId") || searchParams.get("id") || "";
   const fallbackTitle = searchParams.get("fundraiserName") || "Unknown Fundraiser";
   const [fundraiserDetails, setFundraiserDetails] = useState({
     name: fallbackTitle,
@@ -14,6 +14,7 @@ const PaymentPage = () => {
     amountRaised: 0,
     reason: "",
     documents: [],
+    coverImage: "",
   });
   const [loadingFundraiser, setLoadingFundraiser] = useState(true);
 
@@ -53,6 +54,7 @@ const PaymentPage = () => {
             documents: data.fundraiser.documentName
               ? [{ name: data.fundraiser.documentName, url: "#" }]
               : [],
+            coverImage: data.fundraiser.coverImage || "",
           });
         } else {
           console.error("Failed to load fundraiser:", data.error);
@@ -137,7 +139,7 @@ const PaymentPage = () => {
           name: donorName,
           email: donorEmail,
         },
-        theme: { color: "#3399cc" },
+        theme: { color: "#1B6B45" },
       };
 
       if (!window.Razorpay) {
@@ -155,86 +157,125 @@ const PaymentPage = () => {
     }
   };
 
+  const quickAmounts = [100, 500, 1000, 2000];
 
   return (
     <>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="afterInteractive" />
 
-      <div className="flex justify-center items-center min-h-screen bg-gray-900 text-white p-6" style={{ zoom: "90%" }}>
-        <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-lg">
-          <h1 className="text-3xl font-bold text-center mb-4">{fundraiserDetails.name}&apos;s Fundraiser</h1>
-          {loadingFundraiser ? (
-            <p className="text-gray-300">Loading fundraiser details...</p>
-          ) : (
-            <>
-              <p className="text-lg"><strong>Reason:</strong> {fundraiserDetails.reason || "Not provided"}</p>
-              <p className="text-lg"><strong>Needed:</strong> ₹{fundraiserDetails.amountNeeded.toLocaleString()}</p>
-              <p className="text-lg"><strong>Raised:</strong> ₹{fundraiserDetails.amountRaised.toLocaleString()}</p>
-            </>
-          )}
-
-          {/* Supporting Documents */}
-          <div className="mt-4">
-            <h3 className="text-lg font-semibold">Supporting Documents:</h3>
-            <ul className="list-disc list-inside text-sm text-gray-300">
-              {fundraiserDetails.documents.length === 0 ? (
-                <li>No documents uploaded.</li>
-              ) : (
-                fundraiserDetails.documents.map((doc, index) => (
-                  <li key={index}>
-                    <a href={doc.url} className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">
-                      {doc.name}
-                    </a>
-                  </li>
-                ))
-              )}
-            </ul>
+      <div className="min-h-screen px-4 py-10 md:py-16">
+        <div className="mx-auto max-w-lg">
+          <div className="mb-8 rounded-2xl border border-[#E2EBE5] bg-white p-5">
+            {fundraiserDetails.coverImage ? (
+              <img
+                src={fundraiserDetails.coverImage}
+                alt={fundraiserDetails.name}
+                className="mb-4 h-40 w-full rounded-xl object-cover"
+              />
+            ) : null}
+            <h1 className="text-lg font-bold text-[#1A1A1A]">{fundraiserDetails.name}</h1>
+            <p className="mt-2 text-sm text-gray-600 line-clamp-2">
+              {fundraiserDetails.reason || "No description added yet."}
+            </p>
+            <div className="mt-4 h-1.5 w-full rounded-full bg-gray-100">
+              <div
+                className="h-full rounded-full bg-[#22C37A] animate-pulse-subtle"
+                style={{
+                  width:
+                    fundraiserDetails.amountNeeded > 0
+                      ? `${Math.min(
+                          (fundraiserDetails.amountRaised / fundraiserDetails.amountNeeded) * 100,
+                          100
+                        )}%`
+                      : "0%",
+                }}
+              />
+            </div>
+            <p className="mt-2 text-xs text-gray-500">
+              ₹{fundraiserDetails.amountRaised.toLocaleString()} raised •
+              {" "}
+              {fundraiserDetails.amountNeeded > 0
+                ? Math.round(
+                    (fundraiserDetails.amountRaised / fundraiserDetails.amountNeeded) * 100
+                  )
+                : 0}
+              % of ₹{fundraiserDetails.amountNeeded.toLocaleString()} goal
+            </p>
           </div>
 
-          {/* Donor Input Fields */}
-          <div className="mt-6 space-y-3">
-            <input
-              type="text"
-              placeholder="Your Name"
-              className="w-full p-3 rounded bg-gray-700 text-white"
-              value={donorName}
-              onChange={(e) => setDonorName(e.target.value)}
-            />
-            <input
-              type="email"
-              placeholder="Your Email"
-              className="w-full p-3 rounded bg-gray-700 text-white"
-              value={donorEmail}
-              onChange={(e) => setDonorEmail(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Message (Optional)"
-              className="w-full p-3 rounded bg-gray-700 text-white"
-              value={donorMessage}
-              onChange={(e) => setDonorMessage(e.target.value)}
-            />
-            <input
-              type="number"
-              placeholder="Donation Amount (₹)"
-              className="w-full p-3 rounded bg-gray-700 text-white"
-              value={donationAmount}
-              onChange={(e) => setDonationAmount(e.target.value)}
-            />
-          </div>
+          <div className="rounded-2xl border border-[#E2EBE5] bg-white p-6">
+            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Secure donation</p>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-wide text-gray-500">Name</label>
+                <input
+                  type="text"
+                  placeholder="Full name"
+                  className="mt-2 w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
+                  value={donorName}
+                  onChange={(e) => setDonorName(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-wide text-gray-500">Email</label>
+                <input
+                  type="email"
+                  placeholder="name@email.com"
+                  className="mt-2 w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
+                  value={donorEmail}
+                  onChange={(e) => setDonorEmail(e.target.value)}
+                />
+              </div>
+            </div>
 
-          {/* Pay Now Button */}
-          <button
-            className="mt-6 w-full bg-green-600 
-             hover:bg-green-700 
-             active:bg-green-800
-             text-white py-3 rounded-lg font-semibold 
-             transition duration-200 ease-in-out 
-             cursor-pointer"
-            onClick={handlePayment}
-          >
-            Pay Now
-          </button>
+            <div className="mt-4">
+              <label className="text-xs font-semibold uppercase tracking-wide text-gray-500">Message (optional)</label>
+              <textarea
+                placeholder="Add a note of support"
+                rows={3}
+                className="mt-2 w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
+                value={donorMessage}
+                onChange={(e) => setDonorMessage(e.target.value)}
+              />
+            </div>
+
+            <div className="mt-6">
+              <p className="text-sm font-semibold text-[#1A1A1A]">Choose an amount</p>
+              <div className="mt-3 grid grid-cols-2 gap-3 md:grid-cols-4">
+                {quickAmounts.map((amount) => (
+                  <button
+                    key={amount}
+                    type="button"
+                    onClick={() => setDonationAmount(String(amount))}
+                    className={`cursor-pointer rounded-xl border px-3 py-2 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B6B45]/30 ${
+                      donationAmount === String(amount)
+                        ? "border-[#1B6B45] bg-[#1B6B45] text-white"
+                        : "border-[#E2EBE5] bg-white text-gray-700"
+                    }`}
+                  >
+                    ₹{amount.toLocaleString()}
+                  </button>
+                ))}
+              </div>
+              <div className="mt-4">
+                <input
+                  type="number"
+                  placeholder="Enter custom amount"
+                  className="w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
+                  value={donationAmount}
+                  onChange={(e) => setDonationAmount(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <button
+              className="mt-6 w-full cursor-pointer rounded-xl bg-[#1B6B45] px-6 py-2.5 text-sm font-medium text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B6B45]/30"
+              onClick={handlePayment}
+            >
+              Donate securely
+            </button>
+            <p className="mt-3 text-center text-xs text-gray-500">🔒 Secured by Razorpay</p>
+          </div>
         </div>
       </div>
     </>

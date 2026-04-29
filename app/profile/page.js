@@ -113,61 +113,65 @@ export default function ProfilePage() {
   };
 
   if (status === "loading" || isProfileLoading) {
-    return <div className="p-8 text-white">Loading profile...</div>;
+    return <div className="p-8 text-gray-600">Loading profile...</div>;
   }
 
   return (
-    <div className="min-h-screen text-white px-4 sm:px-6 md:px-10 py-6 md:py-10">
-      <div className="max-w-5xl mx-auto border border-gray-700/50 rounded-xl bg-gray-900/60 p-5 sm:p-8">
+    <div className="min-h-screen px-4 py-6 sm:px-6 md:px-10 md:py-10 text-[#1A1A1A]">
+      <div className="mx-auto max-w-5xl rounded-2xl border border-[#E2EBE5] bg-white p-5 sm:p-8">
         <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-8">
           <div>
-            <div className="w-44 h-44 rounded-xl bg-indigo-200/20 border border-indigo-300/30 flex items-center justify-center mb-6">
-              <div className="w-20 h-20 rounded-full bg-indigo-200/30 flex items-center justify-center text-3xl font-semibold text-indigo-100">
+            <div className="mb-6 flex h-44 w-44 items-center justify-center rounded-2xl border border-[#E2EBE5] bg-[#F4F7F5]">
+              <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#1B6B45]/10 text-3xl font-semibold text-[#1B6B45]">
                 {profileData.name?.charAt(0)?.toUpperCase() || "U"}
               </div>
             </div>
-            <h1 className="text-4xl font-bold leading-none mb-3">{profileData.name || "User"}</h1>
-            <div className="h-px bg-gray-700" />
+            <h1 className="mb-3 text-3xl font-bold leading-none">{profileData.name || "User"}</h1>
+            <div className="h-px bg-[#E2EBE5]" />
           </div>
 
           <div>
             {!isEditingProfile ? (
               <div className="space-y-8">
                 <section>
-                  <h2 className="text-gray-300 uppercase tracking-wide mb-4 underline">Contact Information</h2>
-                  <div className="space-y-3 text-lg">
+                  <h2 className="mb-4 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Contact information
+                  </h2>
+                  <div className="space-y-3 text-sm">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-                      <span className="min-w-28 text-gray-300 font-semibold">Email id:</span>
-                      <span className="text-blue-400 break-all">{profileData.email}</span>
+                      <span className="min-w-28 font-semibold text-gray-700">Email:</span>
+                      <span className="break-all text-gray-600">{profileData.email}</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-                      <span className="min-w-28 text-gray-300 font-semibold">Phone:</span>
-                      <span className="text-gray-200">{profileData.phone || "0000000000"}</span>
+                      <span className="min-w-28 font-semibold text-gray-700">Phone:</span>
+                      <span className="text-gray-600">{profileData.phone || "0000000000"}</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-                      <span className="min-w-28 text-gray-300 font-semibold">Address:</span>
-                      <span className="text-gray-200">{profileData.address || "Not added"}</span>
+                      <span className="min-w-28 font-semibold text-gray-700">Address:</span>
+                      <span className="text-gray-600">{profileData.address || "Not added"}</span>
                     </div>
                   </div>
                 </section>
 
                 <section>
-                  <h2 className="text-gray-300 uppercase tracking-wide mb-4 underline">Basic Information</h2>
-                  <div className="space-y-3 text-lg">
+                  <h2 className="mb-4 text-xs font-semibold uppercase tracking-wide text-gray-500">
+                    Basic information
+                  </h2>
+                  <div className="space-y-3 text-sm">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-                      <span className="min-w-28 text-gray-300 font-semibold">Gender:</span>
-                      <span className="text-gray-200">{profileData.gender}</span>
+                      <span className="min-w-28 font-semibold text-gray-700">Gender:</span>
+                      <span className="text-gray-600">{profileData.gender}</span>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-                      <span className="min-w-28 text-gray-300 font-semibold">Birthday:</span>
-                      <span className="text-gray-200">{profileData.birthday}</span>
+                      <span className="min-w-28 font-semibold text-gray-700">Birthday:</span>
+                      <span className="text-gray-600">{profileData.birthday}</span>
                     </div>
                   </div>
                 </section>
 
                 <button
                   onClick={() => setIsEditingProfile(true)}
-                  className="mt-2 px-10 py-2 rounded-full border border-indigo-400 text-indigo-300 hover:bg-indigo-500/10 transition"
+                  className="mt-2 cursor-pointer rounded-xl border border-[#E2EBE5] px-6 py-2.5 text-sm font-medium text-gray-700 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B6B45]/30"
                 >
                   Edit
                 </button>
@@ -180,14 +184,14 @@ export default function ProfilePage() {
                   value={profileData.name}
                   onChange={handleProfileInputChange}
                   placeholder="Full Name"
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white"
+                  className="w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
                 />
                 <input
                   type="email"
                   name="email"
                   value={profileData.email}
                   disabled
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-gray-400 cursor-not-allowed"
+                  className="w-full cursor-not-allowed rounded-xl border border-[#E2EBE5] bg-gray-50 px-4 py-2.5 text-sm text-gray-400"
                 />
                 <input
                   type="tel"
@@ -195,7 +199,7 @@ export default function ProfilePage() {
                   value={profileData.phone}
                   onChange={handleProfileInputChange}
                   placeholder="Phone"
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white"
+                  className="w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
                 />
                 <input
                   type="text"
@@ -203,13 +207,13 @@ export default function ProfilePage() {
                   value={profileData.address}
                   onChange={handleProfileInputChange}
                   placeholder="Address"
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white"
+                  className="w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
                 />
                 <select
                   name="gender"
                   value={profileData.gender}
                   onChange={handleProfileInputChange}
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white"
+                  className="w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
                 >
                   <option>Not Selected</option>
                   <option>Male</option>
@@ -221,19 +225,19 @@ export default function ProfilePage() {
                   name="birthday"
                   value={profileData.birthday === "Not Selected" ? "" : profileData.birthday}
                   onChange={handleProfileInputChange}
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white"
+                  className="w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
                 />
                 <div className="flex gap-3 pt-2">
                   <button
                     onClick={handleSaveProfile}
                     disabled={isSaving}
-                    className="px-6 py-2 rounded-full bg-indigo-500 hover:bg-indigo-400 text-white disabled:opacity-60"
+                    className="cursor-pointer rounded-xl bg-[#1B6B45] px-6 py-2.5 text-sm font-medium text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B6B45]/30 disabled:opacity-60"
                   >
                     {isSaving ? "Saving..." : "Save"}
                   </button>
                   <button
                     onClick={() => setIsEditingProfile(false)}
-                    className="px-6 py-2 rounded-full border border-gray-500 text-gray-300 hover:bg-gray-800"
+                    className="cursor-pointer rounded-xl border border-[#E2EBE5] px-6 py-2.5 text-sm font-medium text-gray-700"
                   >
                     Cancel
                   </button>

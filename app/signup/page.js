@@ -51,9 +51,9 @@ export default function Signup() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-900">
-      <div className="bg-gray-800 p-8 rounded-xl shadow-lg w-96 text-center">
-        <h1 className="font-bold text-3xl text-white mb-4">Create an Account</h1>
+    <div className="flex min-h-screen items-center justify-center px-4">
+      <div className="w-full max-w-md rounded-2xl border border-[#E2EBE5] bg-white p-8 text-center shadow-sm">
+        <h1 className="mb-4 text-3xl font-bold text-[#1A1A1A]">Create an account</h1>
 
         {/* Full Name Input */}
         <input
@@ -61,7 +61,7 @@ export default function Signup() {
           placeholder="Full Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="w-full p-3 my-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="my-2 w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
         />
 
         {/* Email Input */}
@@ -70,7 +70,7 @@ export default function Signup() {
           placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-3 my-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="my-2 w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
         />
 
         {/* Password Input */}
@@ -79,24 +79,24 @@ export default function Signup() {
           placeholder="Create a password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-3 my-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="my-2 w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
         />
 
         {/* Signup Button */}
         <button
           onClick={handleSignup}
           disabled={loading}
-          className="w-full mt-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition duration-300 disabled:opacity-50"
+          className="mt-4 w-full cursor-pointer rounded-xl bg-[#1B6B45] px-6 py-2.5 text-sm font-medium text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B6B45]/30 disabled:opacity-50"
         >
           {loading ? "Creating account..." : "Sign Up"}
         </button>
 
-        {error && <p className="text-red-400 mt-3 text-sm">{error}</p>}
+        {error && <p className="mt-3 text-sm text-red-500">{error}</p>}
 
         {/* Already have an account? Login Link */}
-        <div className="text-sm mt-3 text-gray-400">
+        <div className="mt-3 text-sm text-gray-500">
           Already have an account?{" "}
-          <button onClick={() => router.push("/login")} className="text-blue-400 hover:underline">
+          <button onClick={() => router.push("/login")} className="text-[#1B6B45] hover:underline">
             Login
           </button>
         </div>

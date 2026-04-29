@@ -11,8 +11,6 @@ export default function FundraiserForm() {
     description: "",
     neededAmount: "",
     coverImage: "",
-    razorpayID: "",
-    razorpaySecret: "",
     documents: null,
   });
 
@@ -62,10 +60,11 @@ export default function FundraiserForm() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-6">
-      <h1 className="text-3xl font-bold mb-6">Create a Fundraiser</h1>
+    <div className="min-h-screen px-4 py-10 sm:px-6">
+      <div className="mx-auto max-w-2xl">
+        <h1 className="mb-6 text-3xl font-bold text-[#1A1A1A]">Create a fundraiser</h1>
 
-      <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg w-full max-w-lg">
+        <form onSubmit={handleSubmit} className="rounded-2xl border border-[#E2EBE5] bg-white p-6">
         <input
           type="text"
           name="title"
@@ -73,7 +72,7 @@ export default function FundraiserForm() {
           value={formData.title}
           onChange={handleChange}
           required
-          className="w-full p-3 mb-3 bg-gray-700 rounded-lg focus:outline-none"
+          className="mb-3 w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
         />
 
         <textarea
@@ -82,7 +81,7 @@ export default function FundraiserForm() {
           value={formData.description}
           onChange={handleChange}
           required
-          className="w-full p-3 mb-3 bg-gray-700 rounded-lg focus:outline-none"
+          className="mb-3 w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
         ></textarea>
 
         <input
@@ -92,7 +91,7 @@ export default function FundraiserForm() {
           value={formData.neededAmount}
           onChange={handleChange}
           required
-          className="w-full p-3 mb-3 bg-gray-700 rounded-lg focus:outline-none"
+          className="mb-3 w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
         />
 
         <input
@@ -101,27 +100,7 @@ export default function FundraiserForm() {
           placeholder="Cover Image URL (optional)"
           value={formData.coverImage}
           onChange={handleChange}
-          className="w-full p-3 mb-3 bg-gray-700 rounded-lg focus:outline-none"
-        />
-
-        <input
-          type="text"
-          name="razorpayID"
-          placeholder="Razorpay ID"
-          value={formData.razorpayID}
-          onChange={handleChange}
-          required
-          className="w-full p-3 mb-3 bg-gray-700 rounded-lg focus:outline-none"
-        />
-
-        <input
-          type="password"
-          name="razorpaySecret"
-          placeholder="Razorpay Secret"
-          value={formData.razorpaySecret}
-          onChange={handleChange}
-          required
-          className="w-full p-3 mb-3 bg-gray-700 rounded-lg focus:outline-none"
+          className="mb-3 w-full rounded-xl border border-[#E2EBE5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
         />
 
         <input
@@ -129,17 +108,18 @@ export default function FundraiserForm() {
           accept="application/pdf"
           onChange={handleFileChange}
           required
-          className="w-full p-3 mb-3 bg-gray-700 rounded-lg focus:outline-none"
+          className="mb-4 w-full rounded-xl border border-[#E2EBE5] bg-[#F4F7F5] px-4 py-2.5 text-sm focus:border-[#1B6B45] focus:outline-none focus:ring-2 focus:ring-[#1B6B45]/20"
         />
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-300"
+          className="w-full cursor-pointer rounded-xl bg-[#1B6B45] px-6 py-2.5 text-sm font-medium text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B6B45]/30"
         >
           {isSubmitting ? "Submitting..." : "Submit Fundraiser"}
         </button>
       </form>
+      </div>
     </div>
   );
 }
