@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import FundraiserCard from "@/components/FundraiserCard";
+import { CARD_COVERS } from "@/lib/cardCovers";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
@@ -118,6 +119,7 @@ export default function Dashboard() {
   };
 
   const avatarColors = ["bg-[#1B6B45]/10 text-[#1B6B45]", "bg-[#22C37A]/10 text-[#22C37A]", "bg-[#5B7FD8]/10 text-[#5B7FD8]"];
+  const coverForIndex = (index, offset = 0) => CARD_COVERS[(index + offset) % CARD_COVERS.length];
 
   return (
     <div className="min-h-screen px-6 py-8 md:px-10 md:py-10">
@@ -216,15 +218,17 @@ export default function Dashboard() {
             ) : (
               myFundraisers.map((project, index) => {
                 const stats = getFundStats(project);
+                const coverData = coverForIndex(index);
                 return (
                   <FundraiserCard
                     key={project._id || index}
                     _id={project._id}
                     title={project.title}
-                    description={project.description}
+                    description={project.description || coverData.description}
                     category={index % 2 === 0 ? "Education" : "Medical"}
                     targetAmount={stats.needed}
                     raisedAmount={stats.raised}
+                    coverImage={coverData.src}
                   />
                 );
               })
@@ -245,15 +249,17 @@ export default function Dashboard() {
             ) : (
               fundraisers.map((project, index) => {
                 const stats = getFundStats(project);
+                const coverData = coverForIndex(index, myFundraisers.length);
                 return (
                   <FundraiserCard
                     key={project._id || index}
                     _id={project._id}
                     title={project.title}
-                    description={project.description}
+                    description={project.description || coverData.description}
                     category={index % 3 === 0 ? "Disaster" : "Medical"}
                     targetAmount={stats.needed}
                     raisedAmount={stats.raised}
+                    coverImage={coverData.src}
                   />
                 );
               })

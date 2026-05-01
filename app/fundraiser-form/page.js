@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import FundraiserCard from "@/components/FundraiserCard";
+import { CARD_COVERS } from "@/lib/cardCovers";
 
 export default function FundraiserForm() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function FundraiserForm() {
     coverImageFile: null,
     documents: null,
   });
+  const previewCover = CARD_COVERS[0];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -196,6 +198,7 @@ export default function FundraiserForm() {
                 category={formData.category}
                 targetAmount={Number(formData.neededAmount || 0)}
                 raisedAmount={0}
+                coverImage={formData.coverImage || previewCover.src}
               />
               <div className="mt-4 rounded-2xl border border-[#E2EBE5] bg-[#F4F7F5] p-4 text-xs text-gray-600">
                 <p>Supporting document: {formData.documents?.name || "Not uploaded yet"}</p>

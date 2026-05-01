@@ -269,7 +269,7 @@ const PaymentPage = () => {
             </div>
 
             <button
-              className="mt-6 w-full cursor-pointer rounded-xl bg-[#1B6B45] px-6 py-2.5 text-sm font-medium text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B6B45]/30"
+              className="mt-6 w-full cursor-pointer rounded-xl bg-[#BEE86A] px-6 py-2.5 text-sm font-bold text-[#1A1A1A] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BEE86A]/50 hover:opacity-90 shadow-sm"
               onClick={handlePayment}
             >
               Donate securely

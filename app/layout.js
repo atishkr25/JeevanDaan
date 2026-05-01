@@ -1,12 +1,12 @@
-import { Inter } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SessionWrapper from "@/components/SessionWrapper";
 import PageShell from "@/components/PageShell";
 
-const inter = Inter({
-  variable: "--font-inter",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space",
   subsets: ["latin"],
 });
 
@@ -19,12 +19,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} font-sans min-h-screen bg-[#F4F7F5] text-[#1A1A1A] antialiased overflow-x-hidden`}
+        className={`${spaceGrotesk.variable} font-sans min-h-screen bg-white text-[#1A1A1A] antialiased overflow-x-hidden flex flex-col`}
       >
         <SessionWrapper>
           <PageShell>
             <Navbar />
-            {children}
+            <main className="flex-1">{children}</main>
             <Footer />
           </PageShell>
         </SessionWrapper>
@@ -32,3 +32,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+

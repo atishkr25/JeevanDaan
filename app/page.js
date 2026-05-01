@@ -1,8 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import FundraiserCard from "@/components/FundraiserCard";
+import { CARD_COVERS } from "@/lib/cardCovers";
+
+import heroImage from "@/assets/compassion-karuna.jpg";
+import highlightImageOne from "@/assets/image2.avif";
+import highlightImageTwo from "@/assets/image3.avif";
+import highlightImageThree from "@/assets/image4.avif";
 
 export default function Home() {
   const [fundraisers, setFundraisers] = useState([]);
@@ -45,192 +51,354 @@ export default function Home() {
     };
   }, [fundraisers, payments]);
 
-  const categoryCycle = ["Medical", "Education", "Disaster"];
   const featuredFundraisers = fundraisers.slice(0, 3);
+  
+  const fallbackUrgent = [
+    {
+      title: "GreenFund: Sustain Earth Now",
+      org: "We Care",
+      daysLeft: "7 days left",
+      raised: 50240,
+      goal: 120000,
+      image: highlightImageOne.src,
+      verified: true,
+      creatorName: "Nitin Subhash Bhoir",
+      category: "Medical",
+      description: "Support our urgent drive to bring essential resources to those in need.",
+      donors: 14,
+    },
+    {
+      title: "SeniorHealth: Support Campaign",
+      org: "Unicef",
+      daysLeft: "19 days left",
+      raised: 42400,
+      goal: 100000,
+      image: highlightImageTwo.src,
+      verified: true,
+      creatorName: "Priya Sharma",
+      category: "Education",
+      description: "Helping seniors with medical care and daily essentials.",
+      donors: 42,
+    },
+    {
+      title: "DisasterCare: Urgent Support",
+      org: "Unity Foundation",
+      daysLeft: "23 days left",
+      raised: 21020,
+      goal: 80000,
+      image: highlightImageThree.src,
+      verified: false,
+      creatorName: "Unknown",
+      category: "Disaster",
+      description: "Immediate relief operations for recent disaster victims.",
+      donors: 8,
+    },
+  ];
+
+  const urgentCards = featuredFundraisers.length
+    ? featuredFundraisers.map((fund, index) => {
+        const avifImages = [highlightImageOne.src, highlightImageTwo.src, highlightImageThree.src];
+        return {
+          id: fund._id || index,
+          title: fund.title || CARD_COVERS[index % CARD_COVERS.length].title,
+          org: "Sahayak Community",
+          daysLeft: "Urgent",
+          raised: Number(fund.amountRaised || 0),
+          goal: Number(fund.amountNeeded || 0),
+          image: avifImages[index % avifImages.length] || CARD_COVERS[index % CARD_COVERS.length].src,
+          verified: true,
+          creatorName: fund.createdByName || "Unknown",
+          category: fund.category || CARD_COVERS[index % CARD_COVERS.length].category || "Medical",
+          description: fund.description || CARD_COVERS[index % CARD_COVERS.length].description || "Join us in making a difference for this important cause.",
+          donors: fund.donorsCount || 14
+        };
+      })
+    : fallbackUrgent;
+
+  const communityCount = stats.donors > 0 ? stats.donors : 217924;
 
   return (
-    <div className="px-4 pb-16 sm:px-6">
-      <section className="pt-10">
-        <div className="mx-auto max-w-6xl rounded-3xl border border-[#E2EBE5] bg-white p-10 shadow-sm md:p-14">
-          <span className="inline-flex items-center rounded-full bg-[#1B6B45]/10 px-3 py-1 text-xs font-semibold text-[#1B6B45]">
-            Trusted by 2,000+ campaigns
-          </span>
-          <h1 className="mt-5 text-4xl font-bold leading-tight text-[#1A1A1A] md:text-5xl">
-            Every cause deserves support
-          </h1>
-          <p className="mt-4 max-w-2xl text-sm text-gray-700">
-            Sahayak helps families, communities, and nonprofits share their stories with trust, transparency,
-            and a donor-first experience that feels personal and secure.
-          </p>
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+    <div className="w-full">
+      {/* Hero Section */}
+      <section className="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
+        <div className="relative overflow-hidden rounded-[32px] h-[500px]">
+          <div className="absolute inset-0">
+            <Image
+              src={heroImage}
+              alt="Helping hands"
+              className="h-full w-full object-cover"
+              fill
+              sizes="(max-width: 768px) 100vw, 1100px"
+              priority
+            />
+            {/* Overlay to ensure text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/40 to-transparent" />
+          </div>
+          
+          <div className="absolute top-8 left-1/2 -translate-x-1/2 z-10">
+            <div className="flex items-center justify-center rounded-full bg-[#E5F5F0]/95 backdrop-blur-md px-6 py-2.5 shadow-md border border-[#E5F5F0]/50">
+              <span className="text-sm md:text-[15px] font-bold text-[#1B6B45] tracking-wide">
+                # Easy crowdfunding
+              </span>
+            </div>
+          </div>
+
+          <div className="absolute bottom-10 left-10 right-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-4 leading-none">
+              <h1 className="text-[90px] md:text-[140px] font-bold text-white tracking-tighter leading-[0.85]">
+                Sahayak
+              </h1>
+              <p className="text-2xl md:text-[36px] font-semibold text-white/90 leading-[1.1] md:mb-1">
+                Help<br className="hidden md:block" />Others
+              </p>
+            </div>
+            
             <Link
               href="/fundraiser-form"
-              className="cursor-pointer rounded-xl bg-[#1B6B45] px-6 py-2.5 text-sm font-medium text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B6B45]/30"
+              className="rounded-xl bg-[#BEE86A] px-8 py-3.5 text-lg font-bold text-[#1A1A1A] transition hover:opacity-90 shadow-lg text-center"
             >
-              Start a fundraiser
+              Start Fundraising
             </Link>
-            <Link
-              href="/projects"
-              className="cursor-pointer rounded-xl border border-gray-200 bg-white px-6 py-2.5 text-sm font-medium text-gray-800 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B6B45]/30"
-            >
-              Browse campaigns
-            </Link>
-          </div>
-
-          <div className="mt-8 grid gap-4 sm:grid-cols-3">
-            {[
-              {
-                label: "Total raised",
-                value: `₹${stats.totalRaised.toLocaleString()}`,
-                color: "bg-[#1B6B45]/10 text-[#1B6B45]",
-              },
-              {
-                label: "Active campaigns",
-                value: stats.active.toLocaleString(),
-                color: "bg-[#22C37A]/10 text-[#22C37A]",
-              },
-              {
-                label: "Donors",
-                value: stats.donors.toLocaleString(),
-                color: "bg-[#1B9B6E]/10 text-[#1B9B6E]",
-              },
-            ].map((item) => (
-              <div
-                key={item.label}
-                className="rounded-2xl border border-[#E2EBE5] bg-white p-4"
-              >
-                <div className={`inline-flex h-10 w-10 items-center justify-center rounded-full ${item.color}`}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <path
-                      d="M6 12h12M12 6v12"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                </div>
-                <p className="mt-3 text-base font-semibold text-[#1A1A1A]">{item.value}</p>
-                <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                  {item.label}
-                </p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto mt-12 max-w-6xl">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <h2 className="text-2xl font-semibold text-[#1A1A1A]">Stories that need you today</h2>
-          </div>
-          <Link href="/projects" className="text-sm font-medium text-[#1B6B45]">
-            View all
-          </Link>
-        </div>
-
-        <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {featuredFundraisers.length === 0 ? (
-            <div className="col-span-full rounded-2xl border border-dashed border-[#E2EBE5] bg-white p-6 text-center text-sm text-gray-500">
-              No campaigns yet. Start the first one and inspire donations.
-            </div>
-          ) : (
-            featuredFundraisers.map((fund, index) => (
-              <FundraiserCard
-                key={fund._id || index}
-                _id={fund._id}
-                title={fund.title}
-                description={fund.description}
-                category={categoryCycle[index % categoryCycle.length]}
-                targetAmount={fund.amountNeeded}
-                raisedAmount={fund.amountRaised}
-              />
-            ))
-          )}
-        </div>
+      {/* Intro Section */}
+      <section className="mx-auto mt-24 max-w-4xl px-4 sm:px-6 text-center">
+        <p className="mb-4 text-sm font-bold uppercase tracking-widest text-[#1B6B45]/80">
+          Welcome to Sahayak
+        </p>
+        <h2 className="text-2xl md:text-3xl font-medium leading-relaxed tracking-tight text-[#4A4A4A]">
+          Your trusted platform for effortless crowdfunding. We make fundraising easy, empowering you to share your story and build successful campaigns that drive real change.
+        </h2>
       </section>
 
-      <section id="how-it-works" className="mx-auto mt-12 max-w-6xl">
-        <div className="max-w-2xl">
-          <h2 className="text-2xl font-semibold text-[#1A1A1A]">Launch in three clear steps</h2>
-          <p className="mt-2 text-sm text-gray-600">
-            Create a campaign, share the story, and collect donations through a secure, transparent flow.
-          </p>
-        </div>
-        <div className="mt-6 grid gap-6 md:grid-cols-3">
+      {/* Fund, Fast As Flash Section */}
+      <section className="mx-auto mt-32 max-w-6xl px-4 sm:px-6">
+        <h2 className="text-[32px] font-bold tracking-tight text-[#1A1A1A]">
+          Sahayak, Fast As <span className="italic">Flash</span>
+        </h2>
+        <p className="mt-3 text-[17px] text-[#999999] max-w-4xl">
+          Fundraise at the speed of thought! Elevate your cause in just a minute with our lightning-fast fundraising platform.
+        </p>
+        
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
           {[
             {
-              title: "Tell your story",
-              desc: "Add goals, cover visuals, and supporting documents for trust.",
+              title: "Ignite Impact",
+              desc: "Spark joy by sharing your cause and the positive impact it brings. Clearly express how contributions will make a meaningful difference.",
               icon: (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M5 19l4-1 10-10-3-3-10 10-1 4z"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#BEE86A">
+                  <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" />
                 </svg>
               ),
             },
             {
-              title: "Share with supporters",
-              desc: "Invite donors to join your mission with a single link.",
+              title: "Spread The Word",
+              desc: "Leverage the speed of social media and online networks. Share your fundraising campaign swiftly across various platforms.",
               icon: (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M16 8l-8 4 8 4V8z"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  />
-                  <circle cx="6" cy="12" r="2" stroke="currentColor" strokeWidth="1.5" />
-                  <circle cx="18" cy="6" r="2" stroke="currentColor" strokeWidth="1.5" />
-                  <circle cx="18" cy="18" r="2" stroke="currentColor" strokeWidth="1.5" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#BEE86A">
+                  <path d="M7 2v11h3v9l7-12h-4l4-8z" />
                 </svg>
               ),
             },
             {
-              title: "Collect securely",
-              desc: "Razorpay handles safe payments with real-time updates.",
+              title: "Connect Globally",
+              desc: "Build a strong social network around your cause. Encourage supporters to share the campaign within their local communities.",
               icon: (
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path
-                    d="M7 11V9a5 5 0 0110 0v2"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  />
-                  <rect x="5" y="11" width="14" height="9" rx="2" stroke="currentColor" strokeWidth="1.5" />
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="#BEE86A">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
                 </svg>
               ),
             },
           ].map((item, index) => (
-            <div key={item.title} className="rounded-2xl border border-[#E2EBE5] bg-white p-5">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1B6B45]/10 text-[#1B6B45]">
+            <div key={index} className="rounded-[28px] bg-[#FAFAFA] p-8 sm:p-10 transition-transform hover:-translate-y-1">
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-[#E5F5F0]">
                 {item.icon}
               </div>
-              <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-gray-500">
-                0{index + 1}
-              </p>
-              <h3 className="mt-2 text-lg font-semibold text-[#1A1A1A]">{item.title}</h3>
-              <p className="mt-2 text-sm text-gray-600">{item.desc}</p>
+              <h3 className="mb-4 text-xl font-bold tracking-tight text-[#1A1A1A]">{item.title}</h3>
+              <p className="text-[15px] leading-relaxed text-[#999999]">{item.desc}</p>
             </div>
           ))}
         </div>
-        <div className="mt-10">
-          <div
-            className="relative w-full overflow-hidden rounded-2xl border border-[#E2EBE5] bg-white"
-            style={{ paddingBottom: "56.25%" }}
-          >
-            <iframe
-              className="absolute left-0 top-0 h-full w-full"
-              src="https://www.youtube.com/embed/CiFoHm7HD94?si=IKHkdyemXJd-kgP_"
-              title="Fundraiser story"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-            ></iframe>
+      </section>
+
+      {/* Urgent Fundraising Section */}
+      <section className="mx-auto mt-24 max-w-6xl px-4 sm:px-6">
+        <h2 className="text-3xl font-bold tracking-tight text-[#1A1A1A]">Urgent Fundraising!</h2>
+        <p className="mt-2 text-[#666666]">
+          Time is of the essence! Join our mission NOW to make an immediate impact. Every second counts!
+        </p>
+
+        <div className="mt-10 grid gap-6 md:grid-cols-3">
+          {urgentCards.map((card, index) => {
+            const progress = card.goal > 0 ? Math.min((card.raised / card.goal) * 100, 100) : (card.raised === 50240 ? 85 : card.raised === 42400 ? 75 : 60);
+            
+            return (
+              <div key={card.id || index} className="overflow-hidden rounded-2xl border border-[#E2EBE5] bg-white shadow-sm hover-lift card-hover flex flex-col">
+                <div className="relative h-60 w-full overflow-hidden">
+                  <Image
+                    src={card.image}
+                    alt={card.title}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-4">
+                  <div className="mb-3 flex items-center">
+                    {/* Badge Category */}
+                    {(() => {
+                      const cat = card.category?.toLowerCase() || 'medical';
+                      let badgeColors = 'bg-[#E5F5F0] text-[#1B9B6E]';
+                      let icon = (
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                      );
+                      
+                      if (cat === 'education') {
+                        badgeColors = 'bg-[#EBF2FF] text-[#3B82F6]';
+                        icon = (
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                          </svg>
+                        );
+                      } else if (cat === 'disaster' || cat === 'emergency') {
+                        badgeColors = 'bg-[#FFF0EB] text-[#F97316]';
+                        icon = (
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                          </svg>
+                        );
+                      }
+
+                      return (
+                        <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-bold ${badgeColors}`}>
+                          {icon}
+                          {card.category || "Medical"}
+                        </span>
+                      );
+                    })()}
+                  </div>
+                  
+                  <h3 className="mb-1 text-[15px] font-bold text-[#1A1A1A] line-clamp-1">{card.title}</h3>
+                  <p className="mb-4 text-xs text-[#666666] line-clamp-1">{card.description}</p>
+                  
+                  <div className="mb-4 flex items-center gap-2">
+                    <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#E5F5F0] text-[10px] font-bold text-[#1B9B6E]">
+                      {(() => {
+                        const name = card.creatorName || "Unknown";
+                        const parts = name.trim().split(" ");
+                        if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+                        return name.substring(0, 2).toUpperCase();
+                      })()}
+                    </div>
+                    <span className="text-xs text-[#666666]">
+                      by <span className="font-semibold text-[#1A1A1A]">{card.creatorName || "Unknown"}</span>
+                    </span>
+                  </div>
+                  
+                  <div className="mt-auto">
+                    <div className="h-1.5 w-full rounded-full bg-gray-100 overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-[#BEE86A] animate-pulse-subtle"
+                        style={{ width: `${progress}%` }}
+                      />
+                    </div>
+                    
+                    <div className="mt-3 flex items-start justify-between text-xs">
+                      <div className="flex flex-col gap-1">
+                        <div>
+                          <span className="font-bold text-[#1A1A1A]">₹{card.raised.toLocaleString()} </span>
+                          <span className="text-[#1A1A1A] font-medium">raised</span>
+                        </div>
+                        <span className="text-gray-400">{card.donors || 14} donors</span>
+                      </div>
+                      <span className="text-gray-400">
+                        {progress.toFixed(1)}% of ₹{card.goal.toLocaleString()}
+                      </span>
+                    </div>
+
+                    <Link
+                      href={card.id ? `/payment?id=${card.id}` : "/payment"}
+                      className="mt-5 inline-flex w-full cursor-pointer items-center justify-center rounded-xl bg-[#BEE86A] px-6 py-2.5 text-sm font-bold text-[#1A1A1A] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BEE86A]/50 hover:opacity-90"
+                    >
+                      Donate now
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Community Section */}
+      <section className="mx-auto mt-32 max-w-6xl px-4 sm:px-6 py-10 text-center">
+        <div className="relative py-12 md:py-16">
+          <div className="relative z-10 mx-auto max-w-3xl bg-transparent">
+            <p className="text-xl md:text-2xl text-[#1A1A1A] mb-2 font-medium tracking-tight">Be The Part Of Sahayak With Over</p>
+            <h2 className="text-[130px] md:text-[240px] font-serif font-light leading-[0.9] tracking-tighter text-[#1A1A1A] py-2">
+              {communityCount.toLocaleString()}+
+            </h2>
+            <p className="mt-2 text-xl md:text-2xl text-[#1A1A1A] font-medium tracking-tight">People From Around The World Joined</p>
           </div>
+
+          {/* Floating images completely pushed to the edges */}
+          <div className="absolute inset-0 pointer-events-none hidden lg:block">
+            {/* Top Left */}
+            <div className="absolute left-4 top-0 h-40 w-32 overflow-hidden rounded-[20px] grayscale opacity-90 shadow-md">
+              <Image src={highlightImageOne} alt="Community" fill className="object-cover" />
+            </div>
+            {/* Bottom Left */}
+            <div className="absolute left-20 bottom-4 h-36 w-36 overflow-hidden rounded-[24px] grayscale opacity-90 shadow-md">
+              <Image src={highlightImageTwo} alt="Community" fill className="object-cover" />
+            </div>
+            {/* Top Right */}
+            <div className="absolute right-4 top-4 h-48 w-32 overflow-hidden rounded-[20px] grayscale opacity-90 shadow-md">
+              <Image src={highlightImageThree} alt="Community" fill className="object-cover" />
+            </div>
+            {/* Bottom Right */}
+            <div className="absolute right-24 bottom-6 h-36 w-36 overflow-hidden rounded-[24px] grayscale opacity-90 shadow-md">
+              <Image src={heroImage} alt="Community" fill className="object-cover" />
+            </div>
+          </div>
+        </div>
+
+        <Link href="/signup" className="mt-16 inline-block rounded-2xl bg-[#BEE86A] px-10 py-4 text-lg font-bold text-[#1A1A1A] transition hover:opacity-90 shadow-sm relative z-20">
+          Join Sahayak Now!
+        </Link>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="mx-auto mt-32 max-w-6xl px-4 pb-20 sm:px-6">
+        <h2 className="text-3xl font-bold text-[#1A1A1A] mb-10">Frequently Asked Questions.</h2>
+        
+        <div className="divide-y divide-gray-200">
+          {[
+            "How Can I Make Donation?",
+            "Is My Donation Tax-Deductible?",
+            "Can I Donate In Honor Or Memory Of Someone?",
+            "How Will My Donation Be Used?",
+            "Can I Set Up A Recurring Donation?",
+          ].map((question, index) => (
+            <details key={index} className="group py-5">
+              <summary className="flex cursor-pointer list-none items-center justify-between text-lg font-semibold text-[#666666] group-hover:text-[#1A1A1A]">
+                {question}
+                <span className="text-2xl text-gray-400 group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <p className="mt-4 text-[#666666] leading-relaxed">
+                Reach out to the campaign or check the donation flow for details and receipts.
+              </p>
+            </details>
+          ))}
         </div>
       </section>
     </div>
   );
 }
+
+

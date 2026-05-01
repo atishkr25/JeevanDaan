@@ -118,6 +118,8 @@ const FundraiserCard = ({
   category = "Medical",
   targetAmount = 0,
   raisedAmount = 0,
+  coverImage,
+  creatorName,
   _id,
 }) => {
   const amountNeeded = Number(targetAmount || 0);
@@ -125,12 +127,32 @@ const FundraiserCard = ({
   const progress = amountNeeded > 0 ? Math.min((amountRaised / amountNeeded) * 100, 100) : 0;
   const styles = categoryConfig[category] || categoryConfig.Default;
   const paymentLink = _id ? `/payment?id=${_id}` : "/payment";
+  const hasCoverImage = Boolean(coverImage);
+  
+  const safeCreatorName = creatorName || "Unknown";
+  const getInitials = (name) => {
+    if (!name) return "U";
+    const parts = name.trim().split(" ");
+    if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    return name.substring(0, 2).toUpperCase();
+  };
 
   return (
     <div className="overflow-hidden rounded-2xl border border-[#E2EBE5] bg-white shadow-sm hover-lift card-hover">
-      <div className={`flex h-28 items-center justify-center bg-gradient-to-r ${styles.gradient}`}>
-        {styles.icon}
-      </div>
+      {hasCoverImage ? (
+        <div className="h-28 w-full overflow-hidden">
+          <img
+            src={coverImage}
+            alt={title || "Fundraiser cover"}
+            className="h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      ) : (
+        <div className={`flex h-28 items-center justify-center bg-gradient-to-r ${styles.gradient}`}>
+          {styles.icon}
+        </div>
+      )}
       <div className="p-4">
         <div className="flex items-center gap-2">
           <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-medium ${styles.badge}`}>
@@ -142,6 +164,15 @@ const FundraiserCard = ({
         <p className="mt-2 text-xs text-gray-600 line-clamp-2">
           {description || "Share the story behind your campaign."}
         </p>
+
+        <div className="mt-4 flex items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#E5F5F0] text-xs font-bold text-[#1B9B6E]">
+            {getInitials(safeCreatorName)}
+          </div>
+          <span className="text-xs text-gray-700">
+            by <span className="font-medium text-[#1A1A1A]">{safeCreatorName}</span>
+          </span>
+        </div>
 
         <div className="mt-4">
           <div className="h-1.5 w-full rounded-full bg-gray-100">
@@ -161,7 +192,7 @@ const FundraiserCard = ({
 
         <Link
           href={paymentLink}
-          className="mt-4 inline-flex w-full cursor-pointer items-center justify-center rounded-xl bg-[#1B6B45] px-6 py-2.5 text-sm font-medium text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B6B45]/30"
+          className="mt-4 inline-flex w-full cursor-pointer items-center justify-center rounded-xl bg-[#BEE86A] px-6 py-2.5 text-sm font-bold text-[#1A1A1A] transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#BEE86A]/50 hover:opacity-90"
         >
           Donate now
         </Link>
