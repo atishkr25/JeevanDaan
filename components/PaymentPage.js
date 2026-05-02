@@ -99,7 +99,7 @@ const PaymentPage = () => {
 
       // 🔹 Razorpay Payment Options
       const options = {
-        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "rzp_test_ShI2nkHcZZYXBE",
         amount: donationAmount * 100, // Convert to paise
         currency: "INR",
         name: fundraiserDetails.name,

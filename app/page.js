@@ -115,7 +115,7 @@ export default function Home() {
       })
     : fallbackUrgent;
 
-  const communityCount = stats.donors > 0 ? stats.donors : 217924;
+  const communityCount = stats.donors > 0 ? stats.donors : 0;
 
   return (
     <div className="w-full">
