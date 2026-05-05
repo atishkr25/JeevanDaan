@@ -1,6 +1,6 @@
 # Sahayak
 
-Sahayak is a full-stack crowdfunding platform built to make raising funds easy, transparent, and secure. Whether it's for medical emergencies, education, or disaster relief, this app lets users create campaigns and accept donations smoothly.
+Sahayak is a full-stack crowdfunding platform built to make raising funds easy, transparent, and secure. Whether it&apos;s for medical emergencies, education, or disaster relief, this app lets users create campaigns and accept donations smoothly.
 
 ## What it does
 
@@ -57,7 +57,7 @@ If you want to spin this up on your own machine, here's how:
 
 ## How the Payment Flow Works
 
-If you're curious about how the donations are processed:
+If you&apos;re curious about how the donations are processed:
 1. The user enters their details and the donation amount.
 2. The frontend hits `/api/create-order` to generate a secure Razorpay order.
 3. The Razorpay checkout modal pops up for the user to complete the transaction.

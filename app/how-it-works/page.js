@@ -110,7 +110,7 @@ export default function HowItWorks() {
             Get Involved
           </h2>
           <p className="mb-12 text-xl leading-relaxed text-gray-600">
-            Whether you're looking to start a campaign, donate to a cause, or spread the word, you can make a monumental difference today.
+            Whether you&apos;re looking to start a campaign, donate to a cause, or spread the word, you can make a monumental difference today.
           </p>
           <Link 
             href="/fundraiser-form" 
