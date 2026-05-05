@@ -14,9 +14,9 @@ const Navbar = () => {
   const menuRef = useRef(null);
 
   const navLinks = [
-    { href: "/projects", label: "Explore" },
-    { href: "/projects", label: "Donate" }, // Replaced Donation with Donate, pointing to projects for now
-    { href: "/#how-it-works", label: "How it works" },
+    { href: "/projects", label: "Browse Fundraisers" },
+    { href: "/how-it-works#how-it-works-section", label: "How it works" },
+    { href: "/how-it-works", label: "About" },
     { href: "/dashboard", label: "Dashboard" },
   ];
 
@@ -43,9 +43,8 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`sticky top-0 z-50 border-b border-[#E2EBE5] bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/80 transition-shadow ${
-        isScrolled ? "shadow-sm" : "shadow-none"
-      }`}
+      className={`sticky top-0 z-50 border-b border-[#E2EBE5] bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/80 transition-shadow ${isScrolled ? "shadow-sm" : "shadow-none"
+        }`}
     >
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-4 sm:px-6">
         <div className="flex items-center gap-12">
@@ -58,9 +57,9 @@ const Navbar = () => {
             </span>
             <span className="text-2xl font-bold tracking-tight text-[#1A1A1A]">Sahayak</span>
           </Link>
-          
+
           <div className="h-6 w-[1px] bg-gray-300 hidden md:block"></div>
-          
+
           {/* Links */}
           <div className="hidden items-center gap-8 md:flex">
             {navLinks.map((link) => (

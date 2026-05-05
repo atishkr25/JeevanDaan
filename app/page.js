@@ -170,59 +170,10 @@ export default function Home() {
           Welcome to Sahayak
         </p>
         <h2 className="text-2xl md:text-3xl font-medium leading-relaxed tracking-tight text-[#4A4A4A]">
-          Your trusted platform for effortless crowdfunding. We make fundraising easy, empowering you to share your story and build successful campaigns that drive real change.
+          Your trusted platform for effortless crowdfunding. We make fundraising easy, empowering you to share your story and create campaigns that truly make a difference.
         </h2>
       </section>
 
-      {/* Fund, Fast As Flash Section */}
-      <section className="mx-auto mt-32 max-w-6xl px-4 sm:px-6">
-        <h2 className="text-[32px] font-bold tracking-tight text-[#1A1A1A]">
-          Sahayak, Fast As <span className="italic">Flash</span>
-        </h2>
-        <p className="mt-3 text-[17px] text-[#999999] max-w-4xl">
-          Fundraise at the speed of thought! Elevate your cause in just a minute with our lightning-fast fundraising platform.
-        </p>
-        
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {[
-            {
-              title: "Ignite Impact",
-              desc: "Spark joy by sharing your cause and the positive impact it brings. Clearly express how contributions will make a meaningful difference.",
-              icon: (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="#BEE86A">
-                  <path d="M20 6h-4V4c0-1.11-.89-2-2-2h-4c-1.11 0-2 .89-2 2v2H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-6 0h-4V4h4v2z" />
-                </svg>
-              ),
-            },
-            {
-              title: "Spread The Word",
-              desc: "Leverage the speed of social media and online networks. Share your fundraising campaign swiftly across various platforms.",
-              icon: (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="#BEE86A">
-                  <path d="M7 2v11h3v9l7-12h-4l4-8z" />
-                </svg>
-              ),
-            },
-            {
-              title: "Connect Globally",
-              desc: "Build a strong social network around your cause. Encourage supporters to share the campaign within their local communities.",
-              icon: (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="#BEE86A">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
-                </svg>
-              ),
-            },
-          ].map((item, index) => (
-            <div key={index} className="rounded-[28px] bg-[#FAFAFA] p-8 sm:p-10 transition-transform hover:-translate-y-1">
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-[#E5F5F0]">
-                {item.icon}
-              </div>
-              <h3 className="mb-4 text-xl font-bold tracking-tight text-[#1A1A1A]">{item.title}</h3>
-              <p className="text-[15px] leading-relaxed text-[#999999]">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* Urgent Fundraising Section */}
       <section className="mx-auto mt-24 max-w-6xl px-4 sm:px-6">
